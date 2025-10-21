@@ -1,22 +1,22 @@
 
 // import multer config items
-import uploadPublicreportage from '../middlewares/multer-config_publicReportage.js';
-import uploadEconomie from '../middlewares/multer-config_economir.js';
-import uploadOpinion from '../middlewares/multer-config_opinions.js';
-import uploadMiddleware from '../middlewares/multer-config_divers.js';
-import uploadEnquetesExclusives from '../middlewares/multer-config_enquetesExclusives.js';
-import uploadInstitutions from '../middlewares/multer-config_institutions.js';
+import uploadAchitecture from '../middlewares/multer-config_architecture.js';
+import uploadMarchesIndustries from '../middlewares/multer-config_marchesIndustries.js';
+import uploadEnergiesMines from '../middlewares/multer-config_energiesMines.js';
+import uploadProduitsMateriaux from '../middlewares/multer-config_produitsMateriaux.js';
+import uploadTravauxPublics from '../middlewares/multer-config_travauxPublics.js';
+import uploadFoncier from '../middlewares/multer-config_foncier.js';
 import uploadInterviewMiniature from '../middlewares/videos/multer-config_interview_miniature.js';
 
 
 
 // import controller fonction
-import PublicReportageControler from '../Controllers/PublicReportageControler.js';
-import EconomieControler from '../Controllers/EconomieControler.js'
-import OpinionControler from '../Controllers/OpinionControler.js';
-import DiversController from '../Controllers/DiversController.js';
-import EnquetesExclusivesControler from '../Controllers/EnquetesExclusivesControler.js.js';
-import InstitutionControler from '../Controllers/InstitutionControler.js';
+import ArchitectureControler from '../Controllers/ArchitectureControler.js';
+import MarchesIndustriesControler from '../Controllers/MarchesIndustriesControler.js'
+import EnergiesMinesControler from '../Controllers/EnergiesMinesControler.js';
+import ProduitsMateriauxController from '../Controllers/ProduitsMateriauxController.js';
+import TravauxPublicsControler from '../Controllers/TravauxPublicsControler.js';
+import FoncierControler from '../Controllers/FoncierControler.js';
 import InterviewControler from '../Controllers/InterviewControler.js';
 import SondagesControler from '../Controllers/SondagesControler.js'
 import ContactsControler from '../Controllers/ContactsControler.js';
@@ -28,45 +28,45 @@ import uploadVideoJournalistique from "../middlewares/multer-config_videosJourna
 
 
 const injectionRoutes = (api) => {
-    // Public reportage 
-    api.get('/publicreportage', PublicReportageControler.getAll);
-    api.get('/publicreportage/search', PublicReportageControler.search);
-    api.get('/publicreportage/:id', PublicReportageControler.getOne);
-    api.post('/publicreportage', uploadPublicreportage, PublicReportageControler.createPublicReportage);
-    api.put('/publicreportage/:id', uploadPublicreportage, PublicReportageControler.updateOne);  // Retirez les parenthèses
-    api.delete('/publicreportage/:id', PublicReportageControler.deleteOne);
+    // Public reportage == Architecture => PublicReportageControler
+    api.get('/architecture', ArchitectureControler.getAll);
+    api.get('/architecture/search', ArchitectureControler.search);
+    api.get('/architecture/:id', ArchitectureControler.getOne);
+    api.post('/architecture', uploadAchitecture, ArchitectureControler.createArchitecture);
+    api.put('/architecture/:id', uploadAchitecture, ArchitectureControler.updateOne);  // Retirez les parenthèses
+    api.delete('/architecture/:id', ArchitectureControler.deleteOne);
 
-    // Economie
-    api.get('/economie', EconomieControler.getAll);
-    api.get('/economie/search', EconomieControler.search);
-    api.get('/economie/:id', EconomieControler.getOne);
-    api.post('/economie', uploadEconomie, EconomieControler.createEconomie);
-    api.put('/economie/:id', EconomieControler.updateOne);  // Retirez les parenthèses
-    api.delete('/economie/:id', EconomieControler.deleteOne);
+    // Economie == Marche-Industrie => EconomieControler
+    api.get('/marcheindustrie', MarchesIndustriesControler.getAll);
+    api.get('/marcheindustrie/search', MarchesIndustriesControler.search);
+    api.get('/marcheindustrie/:id', MarchesIndustriesControler.getOne);
+    api.post('/marcheindustrie', uploadMarchesIndustries, MarchesIndustriesControler.createMarchesIndustries);
+    api.put('/marcheindustrie/:id', MarchesIndustriesControler.updateOne);  // Retirez les parenthèses
+    api.delete('/marcheindustrie/:id', MarchesIndustriesControler.deleteOne);
 
-    // Enquetes exclusives
-    api.get('/enquetesExclusives', EnquetesExclusivesControler.getAll);
-    api.get('/enquetesExclusives/search', EnquetesExclusivesControler.search);
-    api.get('/enquetesExclusives/:id', EnquetesExclusivesControler.getOne);
-    api.post('/enquetesExclusives', uploadEnquetesExclusives, EnquetesExclusivesControler.createEnquetesExclisives);
-    api.put('/enquetesExclusives/:id', EnquetesExclusivesControler.updateOne);  // Retirez les parenthèses
-    api.delete('/enquetesExclusives/:id', EnquetesExclusivesControler.deleteOne);
+    // Enquetes exclusives == Travaux-publics => EnquetesExclusivesControler
+    api.get('/travauxpublics', TravauxPublicsControler.getAll);
+    api.get('/travauxpublics/search', TravauxPublicsControler.search);
+    api.get('/travauxpublics/:id', TravauxPublicsControler.getOne);
+    api.post('/travauxpublics', uploadTravauxPublics, TravauxPublicsControler.createTravauxPublics);
+    api.put('/travauxpublics/:id', TravauxPublicsControler.updateOne);  // Retirez les parenthèses
+    api.delete('/travauxpublics/:id', TravauxPublicsControler.deleteOne);
 
-    // Institution
-    api.get('/institutions', InstitutionControler.getAll);
-    api.get('/institutions/search', InterviewControler.search);
-    api.get('/institutions/:id', InstitutionControler.getOne);
-    api.post('/institutions', uploadInstitutions, InstitutionControler.createInstitutions);
-    api.put('/institution/:id', InstitutionControler.updateOne);  // Retirez les parenthèses
-    api.delete('/institution/:id', InstitutionControler.deleteOne);
+    // Institution == Foncier => InstitutionControler
+    api.get('/foncier', FoncierControler.getAll);
+    api.get('/foncier/search', FoncierControler.search);
+    api.get('/foncier/:id', FoncierControler.getOne);
+    api.post('/foncier', uploadFoncier, FoncierControler.createFoncier);
+    api.put('/foncier/:id', FoncierControler.updateOne);  // Retirez les parenthèses
+    api.delete('/foncier/:id', FoncierControler.deleteOne);
 
-    // Opinions
-    api.get('/opinions', OpinionControler.getAll);
-    api.get('/opinions/search', OpinionControler.search);
-    api.get('/opinions/:id', OpinionControler.getOne);
-    api.post('/opinions', uploadOpinion, OpinionControler.createOpinion);
-    api.put('/opinion/:id', OpinionControler.UpdateOne);  // Retirez les parenthèses
-    api.delete('/opinion/:id', OpinionControler.deleteOne);
+    // Opinions == Energies-Mines => OpinionControler
+    api.get('/energiesmines', EnergiesMinesControler.getAll);
+    api.get('/energiesmines/search', EnergiesMinesControler.search);
+    api.get('/energiesmines/:id', EnergiesMinesControler.getOne);
+    api.post('/energiesmines', uploadEnergiesMines, EnergiesMinesControler.createEnergiesMines);
+    api.put('/energiesmines/:id', EnergiesMinesControler.UpdateOne);  // Retirez les parenthèses
+    api.delete('/energiesmines/:id', EnergiesMinesControler.deleteOne);
 
     // Interviews
     api.get('/interviews', InterviewControler.getAll);
@@ -76,6 +76,7 @@ const injectionRoutes = (api) => {
     api.put('/interviews/:id', InterviewControler.updateOne);
     api.delete('/interviews/:id', InterviewControler.deleteOne);
 
+    // Videos
     api.get('/videosjournalistiques', VideosJounalistiqueControler.getAll);
     api.get('/videosjournalistiques/search', VideosJounalistiqueControler.search);
     api.get('/videosjournalistiques/:id', VideosJounalistiqueControler.getOne);
@@ -93,13 +94,13 @@ const injectionRoutes = (api) => {
     api.delete('/sondages/:id', SondagesControler.deleteOne);
 
 
-    // Divers
-    api.get('/divers', DiversController.getAll);
-    api.get('/divers/search', DiversController.search);
-    api.get('/divers/:id', DiversController.getOne);
-    api.post('/divers', uploadMiddleware, DiversController.createDivers);
-    api.put('/divers/:id', DiversController.updateOne);
-    api.delete('/divers/:id', DiversController.deleteOne);
+    // Divers == Produits-Marteriaux => DiversController
+    api.get('/produitsmateriaux', ProduitsMateriauxController.getAll);
+    api.get('/produitsmateriaux/search', ProduitsMateriauxController.search);
+    api.get('/produitsmateriaux/:id', ProduitsMateriauxController.getOne);
+    api.post('/produitsmateriaux', uploadProduitsMateriaux, ProduitsMateriauxController.createProduitsMateriaux);
+    api.put('/produitsmateriaux/:id', ProduitsMateriauxController.updateOne);
+    api.delete('/produitsmateriaux/:id', ProduitsMateriauxController.deleteOne);
 
     // Contacts
 
