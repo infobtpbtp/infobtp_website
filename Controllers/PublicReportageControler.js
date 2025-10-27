@@ -2,8 +2,8 @@ import PublicReportage from "../models/publicreportage.js";
 
 export default class PublicReportageControler {
     static async createPublicReportage(req, res) {
-        console.log("Requête reçue:", req.body);
-        console.log("Fichiers reçus:", req.files);
+    console.log("Requête reçue:", req.body);
+    console.log("Fichiers reçus:", req.files);
 
         try {
             const {
@@ -14,10 +14,12 @@ export default class PublicReportageControler {
                 auteur, categorie, datePublication, tags
             } = req.body;
 
-            // Extraction des URLs des images
-            const imageGrandTitreUrl = req.files['imageGrandTitre'] ? req.files['imageGrandTitre'][0].path : null;
-            const imageSousTitre1Url = req.files['imageSousTitre1'] ? req.files['imageSousTitre1'][0].path : null;
-            const imageSousTitre2Url = req.files['imageSousTitre2'] ? req.files['imageSousTitre2'][0].path : null;
+            // Extraction des URLs des images (les nouvelles images secondaires sont optionnelles)
+            const imageGrandTitreUrl = req.files && req.files['imageGrandTitre'] ? req.files['imageGrandTitre'][0].path : null;
+            const imageSousTitre1Url = req.files && req.files['imageSousTitre1'] ? req.files['imageSousTitre1'][0].path : null;
+            const imageSousTitre2Url = req.files && req.files['imageSousTitre2'] ? req.files['imageSousTitre2'][0].path : null;
+            const imageSecondaire1Url = req.files && req.files['imageSecondaire1'] ? req.files['imageSecondaire1'][0].path : null;
+            const imageSecondaire2Url = req.files && req.files['imageSecondaire2'] ? req.files['imageSecondaire2'][0].path : null;
 
             if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
@@ -37,9 +39,13 @@ export default class PublicReportageControler {
                     grandTitre,
                     contenuGrandTitre,
                     imageGrandTitre: imageGrandTitreUrl,
+                    // imageSecondaire1: imageSecondaire1Url,
+                    // imageSecondaire2: imageSecondaire2Url,
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSousTitre: imageSousTitre1Url },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSousTitre: imageSousTitre2Url },
+                        { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSecondaire1: imageSecondaire1Url },
+                        { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSecondaire2: imageSecondaire2Url },
                     ],
                 },
                 auteur,
@@ -80,8 +86,8 @@ export default class PublicReportageControler {
     }
 
     static async updateOne(req, res) {
-        console.log("Requête reçue:", req.body);
-        console.log("Fichier reçu:", req.file);
+    console.log("Requête reçue:", req.body);
+    console.log("Fichiers reçus:", req.files);
 
         try {
             const articleId = req.params.id;
@@ -120,9 +126,13 @@ export default class PublicReportageControler {
                 datePublication: datePublication || new Date()
             };
 
-            // Si une nouvelle image est uploadée
-            if (req.file) {
-                updateData.titres.imageGrandTitre = req.file.path;
+            // Si de nouvelles images sont uploadées
+            if (req.files) {
+                if (req.files['imageGrandTitre']) updateData.titres.imageGrandTitre = req.files['imageGrandTitre'][0].path;
+                if (req.files['imageSecondaire1']) updateData.titres.imageSecondaire1 = req.files['imageSecondaire1'][0].path;
+                if (req.files['imageSecondaire2']) updateData.titres.imageSecondaire2 = req.files['imageSecondaire2'][0].path;
+                if (req.files['imageSousTitre1']) updateData.titres.sousTitres[0].imageSousTitre = req.files['imageSousTitre1'][0].path;
+                if (req.files['imageSousTitre2']) updateData.titres.sousTitres[1].imageSousTitre = req.files['imageSousTitre2'][0].path;
             }
 
             const updatedPublicReportage = await PublicReportage.findByIdAndUpdate(

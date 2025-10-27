@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const sousTitreSchema = new mongoose.Schema({
   sousTitre: { type: String, required: true },
-  contenuSousTitre: { type: String, required: true },
+  contenuSousTitre: { type: String, required: false },
   imageSousTitre: { type: String },
 
 });
@@ -13,6 +13,8 @@ const publicReportageSchema = new mongoose.Schema({
     grandTitre: { type: String, required: true },
     contenuGrandTitre: { type: String, required: true },
     imageGrandTitre: { type: String },
+    imageSecondaire1: { type: String },
+    imageSecondaire2: { type: String },
     sousTitres: [sousTitreSchema],
   },
   auteur: { type: String },
