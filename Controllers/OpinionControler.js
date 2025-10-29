@@ -5,7 +5,8 @@ import PublicReportage from "../models/publicreportage.js";
 export default class OpinionControler {
     static async createOpinion (req, res) {
         console.log("Requête reçue:", req.body);
-        console.log("Fichier reçu:", req.file);
+        console.log("Fichiers reçus:", req.files);
+
         try {
             // Extraction des données du formulaire
             const { 
@@ -16,11 +17,13 @@ export default class OpinionControler {
                 auteur, categorie, datePublication, tags
             } = req.body;
     
-            // URL de l'image après upload sur Cloudinary
-            const imageUrl = req.file ? req.file.path : null;
+            // Extraction des URLs des images
+            const imageGrandTitreUrl = req.files?.imageGrandTitre?.[0]?.path || null;
+            const imageSecondaire1Url = req.files?.imageSecondaire1?.[0]?.path || null;
+            const imageSecondaire2Url = req.files?.imageSecondaire2?.[0]?.path || null;
     
-            if (!imageUrl) {
-                return res.status(400).json({ error: "L'upload de l'image a échoué" });
+            if (!imageGrandTitreUrl) {
+                return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
             }
 
             let processedTags;
@@ -37,7 +40,9 @@ export default class OpinionControler {
                 titres: {
                     grandTitre, 
                     contenuGrandTitre, 
-                    imageGrandTitre: imageUrl,
+                    imageGrandTitre: imageGrandTitreUrl,
+                    imageSecondaire1: imageSecondaire1Url, // Ajout de l'image secondaire 1
+                    imageSecondaire2: imageSecondaire2Url, // Ajout de l'image secondaire 2
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
@@ -51,7 +56,7 @@ export default class OpinionControler {
             });
     
             let newItem = await opinion.save();
-            res.status(201).json({ message: 'Article créé avec succès', divers: newItem });
+            res.status(201).json({ message: 'Article créé avec succès', opinion: newItem });
         } catch (error) {
             console.error("Erreur lors de la création de l'article:", error);
             res.status(400).json({ error: error.message });
@@ -98,12 +103,21 @@ export default class OpinionControler {
                 datePublication: req.body.datePublication
             };
 
-            // Si une nouvelle image est uploadée
-            if (req.file) {
-                updateData["titres.imageGrandTitre"] = req.file.path;
+            if (req.files?.imageGrandTitre?.[0]) {
+                updateData["titres.imageGrandTitre"] = req.files.imageGrandTitre[0].path;
+            }
+            if (req.files?.imageSecondaire1?.[0]) {
+                updateData["titres.imageSecondaire1"] = req.files.imageSecondaire1[0].path;
+            }
+            if (req.files?.imageSecondaire2?.[0]) {
+                updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
             }
 
-            const updatedOpinion = await Opinion.findByIdAndUpdate(articleId, updateData, { new: true });
+            const updatedOpinion = await Opinion.findByIdAndUpdate(
+                articleId,
+                updateData,
+                { new: true, runValidators: true }
+            );
 
             if (!updatedOpinion) {
                 return res.status(404).json({ error: "Article non trouvé" });
@@ -111,6 +125,7 @@ export default class OpinionControler {
 
             res.status(200).json({ message: 'Article mis à jour avec succès', opinion: updatedOpinion });
         } catch (error) {
+            console.error("Erreur lors de la mise à jour de l'article:", error);
             res.status(400).json({ error: error.message });
         }
     }

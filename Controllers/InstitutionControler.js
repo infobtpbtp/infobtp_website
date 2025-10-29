@@ -4,7 +4,7 @@ import PublicReportage from "../models/publicreportage.js";
 export default class InstitutionControler {
     static async createInstitutions (req, res) {
         console.log("Requête reçue:", req.body);
-        console.log("Fichier reçu:", req.file);
+        console.log("Fichiers reçus:", req.files);
     
         try {
             // Extraction des données du formulaire
@@ -16,11 +16,13 @@ export default class InstitutionControler {
                 auteur, categorie, datePublication, tags
             } = req.body;
     
-            // URL de l'image après upload sur Cloudinary
-            const imageUrl = req.file ? req.file.path : null;
+            // Extraction des URLs des images
+            const imageGrandTitreUrl = req.files?.imageGrandTitre?.[0]?.path || null;
+            const imageSecondaire1Url = req.files?.imageSecondaire1?.[0]?.path || null;
+            const imageSecondaire2Url = req.files?.imageSecondaire2?.[0]?.path || null;
     
-            if (!imageUrl) {
-                return res.status(400).json({ error: "L'upload de l'image a échoué" });
+            if (!imageGrandTitreUrl) {
+                return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
             }
 
             let processedTags;
@@ -28,7 +30,6 @@ export default class InstitutionControler {
                 processedTags = tags;
             } else if (typeof tags === 'string') {
                 processedTags = tags.split(',').map(tag => tag.trim());
-
             } else {
                 processedTags = []
             }
@@ -37,7 +38,9 @@ export default class InstitutionControler {
                 titres: {
                     grandTitre, 
                     contenuGrandTitre, 
-                    imageGrandTitre: imageUrl,
+                    imageGrandTitre: imageGrandTitreUrl,
+                    imageSecondaire1: imageSecondaire1Url, // Ajout de l'image secondaire 1
+                    imageSecondaire2: imageSecondaire2Url, // Ajout de l'image secondaire 2
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
@@ -98,18 +101,27 @@ export default class InstitutionControler {
                 datePublication: req.body.datePublication
             };
 
-            // Si une nouvelle image est uploadée
-            if (req.file) {
-                updateData["titres.imageGrandTitre"] = req.file.path;
+            if (req.files?.imageGrandTitre?.[0]) {
+                updateData["titres.imageGrandTitre"] = req.files.imageGrandTitre[0].path;
+            }
+            if (req.files?.imageSecondaire1?.[0]) {
+                updateData["titres.imageSecondaire1"] = req.files.imageSecondaire1[0].path;
+            }
+            if (req.files?.imageSecondaire2?.[0]) {
+                updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
             }
 
-            const updatedInstitutions = await Institutions.findByIdAndUpdate(articleId, updateData, { new: true });
+            const updatedInstitutions = await Institutions.findByIdAndUpdate(
+                articleId,
+                updateData,
+                { new: true, runValidators: true }
+            );
 
             if (!updatedInstitutions) {
                 return res.status(404).json({ error: "Article non trouvé" });
             }
 
-            res.status(200).json({ message: 'Article mis à jour avec succès', Institutions: updatedInstitutions });
+            res.status(200).json({ message: 'Article mis à jour avec succès', institutions: updatedInstitutions });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
