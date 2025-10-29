@@ -15,12 +15,16 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 const uploadMiddleware = (req, res, next) => {
-  upload.single("imageGrandTitre")(req, res, (err) => {
+  upload.fields([
+    { name: "imageGrandTitre", maxCount: 1 },
+    { name: "imageSecondaire1", maxCount: 1 }, // Nouvelle image optionnelle 1
+    { name: "imageSecondaire2", maxCount: 1 }  // Nouvelle image optionnelle 2
+  ])(req, res, (err) => {
     if (err) {
       console.error("Erreur Multer:", err);
       return res.status(500).json({ error: err.message });
     }
-    console.log("Fichier reçu:", req.file);
+    console.log("Fichiers reçus:", req.files);
     next();
   });
 };
@@ -47,4 +51,4 @@ export default uploadMiddleware;
 
 // const uploadDivers= multer({ storage: storage }).single("imageGrandTitre");
 
-// export default uploadDivers;  
+// export default uploadDivers;
