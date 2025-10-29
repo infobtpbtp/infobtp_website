@@ -12,6 +12,8 @@ const economieShema = new mongoose.Schema({
     grandTitre: { type: String, required: true },
     contenuGrandTitre: { type: String, required: true },
     imageGrandTitre: { type: String },
+    imageSecondaire1: { type: String }, // Nouvelle image optionnelle 1
+    imageSecondaire2: { type: String }, // Nouvelle image optionnelle 2
     sousTitres: [sousTitreSchema],
   },
   auteur: { type: String },

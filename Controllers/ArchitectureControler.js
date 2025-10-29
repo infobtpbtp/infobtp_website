@@ -18,6 +18,8 @@ export default class ArchitectureControler {
             const imageGrandTitreUrl = req.files['imageGrandTitre'] ? req.files['imageGrandTitre'][0].path : null;
             const imageSousTitre1Url = req.files['imageSousTitre1'] ? req.files['imageSousTitre1'][0].path : null;
             const imageSousTitre2Url = req.files['imageSousTitre2'] ? req.files['imageSousTitre2'][0].path : null;
+            const imageSecondaire1Url = req.files['imageSecondaire1'] ? req.files['imageSecondaire1'][0].path : null;
+            const imageSecondaire2Url = req.files['imageSecondaire2'] ? req.files['imageSecondaire2'][0].path : null;
 
             if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
@@ -37,6 +39,8 @@ export default class ArchitectureControler {
                     grandTitre,
                     contenuGrandTitre,
                     imageGrandTitre: imageGrandTitreUrl,
+                    imageSecondaire1: imageSecondaire1Url, // Ajout de l'image secondaire 1
+                    imageSecondaire2: imageSecondaire2Url, // Ajout de l'image secondaire 2
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSousTitre: imageSousTitre1Url },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSousTitre: imageSousTitre2Url },
@@ -81,7 +85,7 @@ export default class ArchitectureControler {
 
     static async updateOne(req, res) {
         console.log("Requête reçue:", req.body);
-        console.log("Fichier reçu:", req.file);
+        console.log("Fichiers reçus:", req.files);
 
         try {
             const articleId = req.params.id;
@@ -120,9 +124,14 @@ export default class ArchitectureControler {
                 datePublication: datePublication || new Date()
             };
 
-            // Si une nouvelle image est uploadée
-            if (req.file) {
-                updateData["titres.imageGrandTitre"] = req.file.path;
+            if (req.files['imageGrandTitre']) {
+                updateData["titres.imageGrandTitre"] = req.files['imageGrandTitre'][0].path;
+            }
+            if (req.files['imageSecondaire1']) {
+                updateData["titres.imageSecondaire1"] = req.files['imageSecondaire1'][0].path;
+            }
+            if (req.files['imageSecondaire2']) {
+                updateData["titres.imageSecondaire2"] = req.files['imageSecondaire2'][0].path;
             }
 
             const updatedArchitecture = await Architecture.findByIdAndUpdate(

@@ -15,12 +15,16 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 const uploadEnquetesExclusives = (req, res, next) => {
-  upload.single("imageGrandTitre")(req, res, (err) => {
+  upload.fields([
+    { name: "imageGrandTitre" },
+    { name: "imageSecondaire1" },
+    { name: "imageSecondaire2" }
+  ])(req, res, (err) => {
     if (err) {
       console.error("Erreur Multer:", err);
       return res.status(500).json({ error: err.message });
     }
-    console.log("Fichier reçu:", req.file);
+    console.log("Fichiers reçus:", req.files);
     next();
   });
 };
