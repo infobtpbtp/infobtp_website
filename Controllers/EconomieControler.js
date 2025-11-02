@@ -106,7 +106,7 @@ export default class EconomieControler {
             if (req.files?.imageGrandTitre?.[0]) {
                 updateData["titres.imageGrandTitre"] = req.files.imageGrandTitre[0].path;
             }
-            if (req.files?.imageOptionnelle1?.[0]) {
+            if (req.files?.imageSecondaire1?.[0]) {
                 updateData["titres.imageSecondaire1"] = req.files.imageSecondaire1[0].path;
             }
             if (req.files?.imageSecondaire2?.[0]) {
