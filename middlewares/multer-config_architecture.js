@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
-const uploadAchitecture = (req, res, next) => {
+const uploadArchitecture = (req, res, next) => {
   const uploadFields = upload.fields([
     { name: 'imageGrandTitre', maxCount: 1 },
     { name: 'imageSousTitre1', maxCount: 1 },
@@ -33,4 +33,4 @@ const uploadAchitecture = (req, res, next) => {
 };
 
 
-export default uploadAchitecture;
+export default uploadArchitecture;

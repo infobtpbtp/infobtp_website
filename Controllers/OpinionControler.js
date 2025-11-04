@@ -85,7 +85,7 @@ export default class OpinionControler {
             .catch(error => res.status(500).json({ error: "Erreur lors de la récupération de l'article" }));
     }
 
-    static async UpdateOne(req, res) {
+    static async updateOne(req, res) {
         try {
             const articleId = req.params.id;
 

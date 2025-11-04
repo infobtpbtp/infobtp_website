@@ -1,7 +1,7 @@
-import PoduitsMateriaux from "../models/produitsMateriaux.js";
+import ProduitsMateriaux from "../models/produitsMateriaux.js";
 import PublicReportage from "../models/publicreportage.js";
 
-export default class PoduitsMateriauxController {
+export default class ProduitsMateriauxController {
     static async createProduitsMateriaux(req, res) {
         console.log("Requête reçue:", req.body);
         console.log("Fichier reçu:", req.file);
@@ -33,7 +33,7 @@ export default class PoduitsMateriauxController {
                 processedTags = []
             }
     
-            const produitsMateriaux = new Divers({
+            const produitsMateriaux = new ProduitsMateriaux({
                 titres: {
                     grandTitre, 
                     contenuGrandTitre, 
@@ -59,7 +59,7 @@ export default class PoduitsMateriauxController {
     }
 
     static getAll(req, res) {
-        PoduitsMateriaux.find()
+        ProduitsMateriaux.find()
             .then(articles => res.status(200).json(articles))
             .catch(error => {
                 console.error(error);
@@ -70,7 +70,7 @@ export default class PoduitsMateriauxController {
     static getOne(req, res) {
         const articleId = req.params.id;
 
-        PoduitsMateriaux.findOne({ _id: articleId })
+        ProduitsMateriaux.findOne({ _id: articleId })
             .then(article => {
                 if (!article) {
                     return res.status(404).json({ error: "Article non trouvé" });
@@ -103,13 +103,13 @@ export default class PoduitsMateriauxController {
                 updateData["titres.imageGrandTitre"] = req.file.path;
             }
 
-            const updatePoduitsMateriaux = await PoduitsMateriaux.findByIdAndUpdate(articleId, updateData, { new: true });
+            const updateProduitsMateriaux = await ProduitsMateriaux.findByIdAndUpdate(articleId, updateData, { new: true });
 
-            if (!updatePoduitsMateriaux) {
+            if (!updateProduitsMateriaux) {
                 return res.status(404).json({ error: "Article non trouvé" });
             }
 
-            res.status(200).json({ message: 'Article mis à jour avec succès', produitsMateriaux: updatePoduitsMateriaux });
+            res.status(200).json({ message: 'Article mis à jour avec succès', produitsMateriaux: updateProduitsMateriaux });
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
@@ -129,7 +129,7 @@ export default class PoduitsMateriauxController {
 
             const regex = new RegExp(decodedQuery, 'i');
 
-            PoduitsMateriaux.find({
+            ProduitsMateriaux.find({
                 $or: [
                     { "titres.grandTitre": regex },
                     { "titres.sousTitres.sousTitre": regex }
@@ -150,7 +150,7 @@ export default class PoduitsMateriauxController {
     static async deleteOne(req, res) {
         try {
             const articleId = req.params.id;
-            const deletedProduitsMateriaux = await PoduitsMateriaux.findByIdAndDelete(articleId);
+            const deletedProduitsMateriaux = await ProduitsMateriaux.findByIdAndDelete(articleId);
 
             if (!deletedProduitsMateriaux) {
                 return res.status(404).json({ error: "Article non trouvé" });

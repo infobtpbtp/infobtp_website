@@ -26,6 +26,20 @@ import uploadInterviews from "../middlewares/multer-config_interview.js";
 import VideosJounalistiqueControler from "../Controllers/VideosJournalistiqueControler.js";
 import uploadVideoJournalistique from "../middlewares/multer-config_videosJournalistiques.js";
 
+// Additional controllers and middlewares
+import ArchitectureControler from '../Controllers/ArchitectureControler.js';
+import uploadArchitecture from '../middlewares/multer-config_architecture.js';
+import MarchesIndustriesControler from '../Controllers/MarchesIndustriesControler.js';
+import uploadMarchesIndustries from '../middlewares/multer-config_marchesIndustries.js';
+import ProduitsMateriauxController from '../Controllers/ProduitsMateriauxController.js';
+import uploadProduitsMateriaux from '../middlewares/multer-config_produitsMateriaux.js';
+import TravauxPublicsControler from '../Controllers/TravauxPublicsControler.js';
+import uploadTravauxPublics from '../middlewares/multer-config_travauxPublics.js';
+import EnergiesMinesControler from '../Controllers/EnergiesMinesControler.js';
+import uploadEnergiesMines from '../middlewares/multer-config_energiesMines.js';
+import FoncierControler from '../Controllers/FoncierControler.js';
+import uploadFoncier from '../middlewares/multer-config_foncier.js';
+
 
 const injectionRoutes = (api) => {
     // Public reportage 
@@ -65,7 +79,7 @@ const injectionRoutes = (api) => {
     api.get('/opinions/search', OpinionControler.search);
     api.get('/opinions/:id', OpinionControler.getOne);
     api.post('/opinions', uploadOpinion, OpinionControler.createOpinion);
-    api.put('/opinion/:id', OpinionControler.UpdateOne);  // Retirez les parenthèses
+    api.put('/opinion/:id', OpinionControler.updateOne);  // Retirez les parenthèses
     api.delete('/opinion/:id', OpinionControler.deleteOne);
 
     // Interviews
@@ -116,6 +130,54 @@ const injectionRoutes = (api) => {
 
     // Recherche
     api.get('/recherche/:q', SearchControler.rechercherElements);
+    
+    // Architecture
+    api.get('/architecture', ArchitectureControler.getAll);
+    api.get('/architecture/search', ArchitectureControler.search);
+    api.get('/architecture/:id', ArchitectureControler.getOne);
+    api.post('/architecture', uploadArchitecture, ArchitectureControler.createArchitecture);
+    api.put('/architecture/:id', uploadArchitecture, ArchitectureControler.updateOne);
+    api.delete('/architecture/:id', ArchitectureControler.deleteOne);
+
+    // Marches Industries
+    api.get('/marchesindustries', MarchesIndustriesControler.getAll);
+    api.get('/marchesindustries/search', MarchesIndustriesControler.search);
+    api.get('/marchesindustries/:id', MarchesIndustriesControler.getOne);
+    api.post('/marchesindustries', uploadMarchesIndustries, MarchesIndustriesControler.createMarchesIndustries);
+    api.put('/marchesindustries/:id', uploadMarchesIndustries, MarchesIndustriesControler.updateOne);
+    api.delete('/marchesindustries/:id', MarchesIndustriesControler.deleteOne);
+
+    // Produits et Matériaux
+    api.get('/produitsmateriaux', ProduitsMateriauxController.getAll);
+    api.get('/produitsmateriaux/search', ProduitsMateriauxController.search);
+    api.get('/produitsmateriaux/:id', ProduitsMateriauxController.getOne);
+    api.post('/produitsmateriaux', uploadProduitsMateriaux, ProduitsMateriauxController.createProduitsMateriaux);
+    api.put('/produitsmateriaux/:id', uploadProduitsMateriaux, ProduitsMateriauxController.updateOne);
+    api.delete('/produitsmateriaux/:id', ProduitsMateriauxController.deleteOne);
+
+    // Travaux Publics
+    api.get('/travauxpublics', TravauxPublicsControler.getAll);
+    api.get('/travauxpublics/search', TravauxPublicsControler.search);
+    api.get('/travauxpublics/:id', TravauxPublicsControler.getOne);
+    api.post('/travauxpublics', uploadTravauxPublics, TravauxPublicsControler.createTravauxPublics);
+    api.put('/travauxpublics/:id', uploadTravauxPublics, TravauxPublicsControler.updateOne);
+    api.delete('/travauxpublics/:id', TravauxPublicsControler.deleteOne);
+
+    // Energies & Mines
+    api.get('/energiesmines', EnergiesMinesControler.getAll);
+    api.get('/energiesmines/search', EnergiesMinesControler.search);
+    api.get('/energiesmines/:id', EnergiesMinesControler.getOne);
+    api.post('/energiesmines', uploadEnergiesMines, EnergiesMinesControler.createEnergiesMines);
+    api.put('/energiesmines/:id', uploadEnergiesMines, EnergiesMinesControler.updateOne);
+    api.delete('/energiesmines/:id', EnergiesMinesControler.deleteOne);
+
+    // Foncier
+    api.get('/foncier', FoncierControler.getAll);
+    api.get('/foncier/search', FoncierControler.search);
+    api.get('/foncier/:id', FoncierControler.getOne);
+    api.post('/foncier', uploadFoncier, FoncierControler.createFoncier);
+    api.put('/foncier/:id', uploadFoncier, FoncierControler.updateOne);
+    api.delete('/foncier/:id', FoncierControler.deleteOne);
 };
 
 export default injectionRoutes;
