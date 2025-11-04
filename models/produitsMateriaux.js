@@ -2,8 +2,8 @@
 import mongoose from "mongoose";
 
 const sousTitreSchema = new mongoose.Schema({
-  sousTitre: { type: String, required: true },
-  contenuSousTitre: { type: String, required: true },
+  sousTitre: { type: String, required: false },
+  contenuSousTitre: { type: String, required: false },
   imageSousTitre: { type: String },
 });
 
