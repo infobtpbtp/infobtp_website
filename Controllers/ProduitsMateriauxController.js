@@ -4,7 +4,7 @@ import PublicReportage from "../models/publicreportage.js";
 export default class ProduitsMateriauxController {
     static async createProduitsMateriaux(req, res) {
         console.log("Requête reçue:", req.body);
-        console.log("Fichier reçu:", req.file);
+        console.log("Fichiers reçus:", req.files);
     
         try {
             // Extraction des données du formulaire
@@ -17,9 +17,12 @@ export default class ProduitsMateriauxController {
             } = req.body;
     
             // URL de l'image après upload sur Cloudinary
-            const imageUrl = req.file ? req.file.path : null;
+            // const imageUrl = req.file ? req.file.path : null;
+            const imageGrandTitreUrl = req.files?.imageGrandTitre?.[0]?.path || null;
+            const imageSecondaire1Url = req.files?.imageSecondaire1?.[0]?.path || null;
+            const imageSecondaire2Url = req.files?.imageSecondaire2?.[0]?.path || null;
     
-            if (!imageUrl) {
+            if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image a échoué" });
             }
 
@@ -37,7 +40,9 @@ export default class ProduitsMateriauxController {
                 titres: {
                     grandTitre, 
                     contenuGrandTitre, 
-                    imageGrandTitre: imageUrl,
+                    imageGrandTitre: imageGrandTitreUrl,
+                    imageSecondaire1: imageSecondaire1Url,
+                    imageSecondaire2: imageSousTitre2Url,
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
@@ -99,8 +104,14 @@ export default class ProduitsMateriauxController {
             };
 
             // Si une nouvelle image est uploadée
-            if (req.file) {
-                updateData["titres.imageGrandTitre"] = req.file.path;
+            if (req.files?.imageGrandTitre?.[0]) {
+                updateData["titres.imageGrandTitre"] = req.files.imageGrandTitre[0].path;
+            }
+            if (req.files?.imageSecondaire1?.[0]) {
+                updateData["titres.imageSecondaire1"] = req.files.imageSecondaire1[0].path;
+            }
+            if (req.files?.imageSecondaire2?.[0]) {
+                updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
             }
 
             const updateProduitsMateriaux = await ProduitsMateriaux.findByIdAndUpdate(articleId, updateData, { new: true });

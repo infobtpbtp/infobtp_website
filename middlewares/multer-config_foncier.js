@@ -24,7 +24,7 @@ const uploadFoncier = (req, res, next) => {
       console.error("Erreur Multer:", err);
       return res.status(500).json({ error: err.message });
     }
-    console.log("Fichier reçu:", req.file);
+    console.log("Fichiers reçus:", req.files);
     next();
   });
 };
