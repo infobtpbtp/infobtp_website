@@ -42,7 +42,7 @@ export default class TravauxPublicsControler {
                 titres: {
                     grandTitre, 
                     contenuGrandTitre, 
-                    imageGrandTitre: imageUrl,
+                    imageGrandTitre: imageGrandTitreUrl,
                     imageSecondaire1: imageSecondaire1Url, // Ajout d'image
                     imageSecondaire2: imageSecondaire2Url, // Ajout d'image
                     sousTitres: [
