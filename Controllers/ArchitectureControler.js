@@ -10,6 +10,7 @@ export default class ArchitectureControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
+                sousTitre3, contenuSousTitre3,
                 externalLink, externalLinkTitle,
                 auteur, categorie, datePublication, tags
             } = req.body;
@@ -44,6 +45,7 @@ export default class ArchitectureControler {
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSousTitre: imageSousTitre1Url },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSousTitre: imageSousTitre2Url },
+                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 },
                     ],
                 },
                 auteur,
@@ -95,6 +97,7 @@ export default class ArchitectureControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
+                sousTitre3, contenuSousTitre3,
                 auteur, categorie, datePublication, tags
             } = req.body;
 
@@ -116,6 +119,7 @@ export default class ArchitectureControler {
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
+                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
                     ],
                 },
                 auteur,
