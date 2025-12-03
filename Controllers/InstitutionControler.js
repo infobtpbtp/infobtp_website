@@ -12,7 +12,7 @@ export default class InstitutionControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
-                sousTitre3, contenuSousTitre3,
+                // sousTitre3, contenuSousTitre3,
                 externalLink, externalLinkTitle,
                 auteur, categorie, datePublication, tags
             } = req.body;
@@ -45,7 +45,7 @@ export default class InstitutionControler {
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
-                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
+                        // { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
                     ],
                 },
                 auteur,
@@ -96,7 +96,7 @@ export default class InstitutionControler {
                 "titres.sousTitres": [
                     { sousTitre: req.body.sousTitre1, contenuSousTitre: req.body.contenuSousTitre1 },
                     { sousTitre: req.body.sousTitre2, contenuSousTitre: req.body.contenuSousTitre2 },
-                    { sousTitre: req.body.sousTitre3, contenuSousTitre: req.body.contenuSousTitre3 }
+                    // { sousTitre: req.body.sousTitre3, contenuSousTitre: req.body.contenuSousTitre3 }
                 ],
                 auteur: req.body.auteur,
                 categorie: req.body.categorie,
