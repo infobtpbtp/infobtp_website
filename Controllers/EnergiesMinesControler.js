@@ -57,7 +57,7 @@ export default class EnergiesMinesControler {
             });
     
             let newItem = await energiesMines.save();
-            res.status(201).json({ message: 'Article créé avec succès', divers: newItem });
+            res.status(201).json({ message: 'Article créé avec succès', energiesMines: newItem });
         } catch (error) {
             console.error("Erreur lors de la création de l'article:", error);
             res.status(400).json({ error: error.message });
