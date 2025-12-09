@@ -15,6 +15,7 @@ const publicReportageSchema = new mongoose.Schema({
     imageGrandTitre: { type: String },
     imageSecondaire1: { type: String },
     imageSecondaire2: { type: String },
+    imageSecondaire3: { type: String }, // Nouvelle image secondaire 3
     sousTitres: [sousTitreSchema],
   },
   auteur: { type: String },

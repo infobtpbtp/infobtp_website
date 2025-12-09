@@ -18,7 +18,8 @@ const uploadOpinion = (req, res, next) => {
   upload.fields([
     { name: "imageGrandTitre", maxCount: 1 },
     { name: "imageSecondaire1", maxCount: 1 }, // Nouvelle image secondaire 1
-    { name: "imageSecondaire2", maxCount: 1 }  // Nouvelle image secondaire 2
+    { name: "imageSecondaire2", maxCount: 1 },  // Nouvelle image secondaire 2
+    { name: "imageSecondaire3", maxCount: 1 }  // Nouvelle image secondaire 3
   ])(req, res, (err) => {
     if (err) {
       console.error("Erreur Multer:", err);

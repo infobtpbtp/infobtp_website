@@ -18,7 +18,8 @@ const uploadTravauxPublics = (req, res, next) => {
   upload.fields([
     { name: "imageGrandTitre" },
     { name: "imageSecondaire1" },
-    { name: "imageSecondaire2" }
+    { name: "imageSecondaire2" },
+    { name: "imageSecondaire3" }
   ])(req, res, (err) => {
     if (err) {
       console.error("Erreur Multer:", err);

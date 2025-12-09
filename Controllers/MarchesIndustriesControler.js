@@ -22,6 +22,7 @@ export default class MarchesIndustriesControler {
             const imageGrandTitreUrl = req.files?.imageGrandTitre?.[0]?.path || null;
             const imageSecondaire1Url = req.files?.imageSecondaire1?.[0]?.path || null;
             const imageSecondaire2Url = req.files?.imageSecondaire2?.[0]?.path || null;
+            const imageSecondaire3Url = req.files?.imageSecondaire3?.[0]?.path || null;
     
             if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image a échoué" });
@@ -44,6 +45,7 @@ export default class MarchesIndustriesControler {
                     imageGrandTitre: imageGrandTitreUrl,
                     imageSecondaire1: imageSecondaire1Url, // Ajout de l'image secondaire 1
                     imageSecondaire2: imageSecondaire2Url, // Ajout de l'image secondaire 2
+                    imageSecondaire3: imageSecondaire3Url, // Ajout de l'image secondaire 3
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
@@ -115,6 +117,9 @@ export default class MarchesIndustriesControler {
             }
             if (req.files?.imageSecondaire2?.[0]) {
                 updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
+            }
+            if (req.files?.imageSecondaire3?.[0]) {
+                updateData["titres.imageSecondaire3"] = req.files.imageSecondaire3[0].path;
             }
 
 

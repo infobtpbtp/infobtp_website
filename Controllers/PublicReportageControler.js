@@ -10,7 +10,7 @@ export default class PublicReportageControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
-                // sousTitre3, contenuSousTitre3,
+                sousTitre3, contenuSousTitre3,
                 externalLink, externalLinkTitle,
                 auteur, categorie, datePublication, tags
             } = req.body;
@@ -21,6 +21,7 @@ export default class PublicReportageControler {
             const imageSousTitre2Url = req.files && req.files['imageSousTitre2'] ? req.files['imageSousTitre2'][0].path : null;
             const imageSecondaire1Url = req.files && req.files['imageSecondaire1'] ? req.files['imageSecondaire1'][0].path : null;
             const imageSecondaire2Url = req.files && req.files['imageSecondaire2'] ? req.files['imageSecondaire2'][0].path : null;
+            const imageSecondaire3Url = req.files && req.files['imageSecondaire3'] ? req.files['imageSecondaire3'][0].path : null;
 
             if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
@@ -42,10 +43,11 @@ export default class PublicReportageControler {
                     imageGrandTitre: imageGrandTitreUrl,
                     imageSecondaire1: imageSecondaire1Url,
                     imageSecondaire2: imageSecondaire2Url,
+                    imageSecondaire3: imageSecondaire3Url,
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSousTitre: imageSousTitre1Url },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSousTitre: imageSousTitre2Url },
-                        // { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 },
+                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3, imageSousTitre: imageSousTitre3Url },
                         // { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1, imageSecondaire1: imageSecondaire1Url },
                         // { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2, imageSecondaire2: imageSecondaire2Url },
                     ],
@@ -99,7 +101,7 @@ export default class PublicReportageControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
-                // sousTitre3, contenuSousTitre3,
+                sousTitre3, contenuSousTitre3,
                 auteur, categorie, datePublication, tags
             } = req.body;
 
@@ -121,7 +123,7 @@ export default class PublicReportageControler {
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
-                        // { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
+                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
                     ],
                 },
                 auteur,
@@ -137,6 +139,7 @@ export default class PublicReportageControler {
                 if (req.files['imageSecondaire2']) updateData.titres.imageSecondaire2 = req.files['imageSecondaire2'][0].path;
                 if (req.files['imageSousTitre1']) updateData.titres.sousTitres[0].imageSousTitre = req.files['imageSousTitre1'][0].path;
                 if (req.files['imageSousTitre2']) updateData.titres.sousTitres[1].imageSousTitre = req.files['imageSousTitre2'][0].path;
+                if (req.files['imageSousTitre3']) updateData.titres.sousTitres[2].imageSousTitre = req.files['imageSousTitre3'][0].path;
             }
 
             const updatedPublicReportage = await PublicReportage.findByIdAndUpdate(

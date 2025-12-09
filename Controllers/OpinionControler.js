@@ -13,7 +13,7 @@ export default class OpinionControler {
                 grandTitre, contenuGrandTitre,
                 sousTitre1, contenuSousTitre1,
                 sousTitre2, contenuSousTitre2,
-                // sousTitre3, contenuSousTitre3,
+                sousTitre3, contenuSousTitre3,
                 externalLink, externalLinkTitle,
                 auteur, categorie, datePublication, tags
             } = req.body;
@@ -22,6 +22,7 @@ export default class OpinionControler {
             const imageGrandTitreUrl = req.files?.imageGrandTitre?.[0]?.path || null;
             const imageSecondaire1Url = req.files?.imageSecondaire1?.[0]?.path || null;
             const imageSecondaire2Url = req.files?.imageSecondaire2?.[0]?.path || null;
+            const imageSecondaire3Url = req.files?.imageSecondaire3?.[0]?.path || null;
     
             if (!imageGrandTitreUrl) {
                 return res.status(400).json({ error: "L'upload de l'image principale a échoué" });
@@ -44,10 +45,11 @@ export default class OpinionControler {
                     imageGrandTitre: imageGrandTitreUrl,
                     imageSecondaire1: imageSecondaire1Url, // Ajout de l'image secondaire 1
                     imageSecondaire2: imageSecondaire2Url, // Ajout de l'image secondaire 2
+                    imageSecondaire3: imageSecondaire3Url, // Ajout de l'image secondaire 3
                     sousTitres: [
                         { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
                         { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
-                        // { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
+                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
                     ],
                 },
                 auteur,
@@ -98,7 +100,7 @@ export default class OpinionControler {
                 "titres.sousTitres": [
                     { sousTitre: req.body.sousTitre1, contenuSousTitre: req.body.contenuSousTitre1 },
                     { sousTitre: req.body.sousTitre2, contenuSousTitre: req.body.contenuSousTitre2 },
-                    // { sousTitre: req.body.sousTitre3, contenuSousTitre: req.body.contenuSousTitre3 }
+                    { sousTitre: req.body.sousTitre3, contenuSousTitre: req.body.contenuSousTitre3 }
                 ],
                 auteur: req.body.auteur,
                 categorie: req.body.categorie,
@@ -114,6 +116,9 @@ export default class OpinionControler {
             }
             if (req.files?.imageSecondaire2?.[0]) {
                 updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
+            }
+            if (req.files?.imageSecondaire3?.[0]) {
+                updateData["titres.imageSecondaire3"] = req.files.imageSecondaire3[0].path;
             }
 
             const updatedOpinion = await Opinion.findByIdAndUpdate(

@@ -14,6 +14,7 @@ const travauxPublicsShema = new mongoose.Schema({
     imageGrandTitre: { type: String },
     imageSecondaire1: { type: String }, // Nouvelle image optionnelle 1
     imageSecondaire2: { type: String }, // Nouvelle image optionnelle 2
+    imageSecondaire3: { type: String }, // Nouvelle image secondaire 3
     sousTitres: [sousTitreSchema],
   },
   auteur: { type: String },

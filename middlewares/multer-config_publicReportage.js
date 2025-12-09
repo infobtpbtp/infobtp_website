@@ -19,7 +19,8 @@ const uploadPublicreportage = (req, res, next) => {
     { name: 'imageSousTitre1', maxCount: 1 },
     { name: 'imageSousTitre2', maxCount: 1 },
     { name: 'imageSecondaire1', maxCount: 1 },
-    { name: 'imageSecondaire2', maxCount: 1 }
+    { name: 'imageSecondaire2', maxCount: 1 },
+    { name: 'imageSecondaire3', maxCount: 1 }
   ])(req, res, (err) => {
     if (err) {
       console.error("Erreur Multer:", err);
