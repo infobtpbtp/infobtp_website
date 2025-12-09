@@ -87,75 +87,48 @@ export default class ArchitectureControler {
             .catch(error => res.status(500).json({ error: "Erreur lors de la récupération de l'article" }));
     }
 
-    static async updateOne(req, res) {
-        console.log("Requête reçue:", req.body);
-        console.log("Fichiers reçus:", req.files);
 
+    static async updateOne(req, res) {
         try {
             const articleId = req.params.id;
 
-            // Extraction des données du formulaire
-            const {
-                grandTitre, contenuGrandTitre,
-                sousTitre1, contenuSousTitre1,
-                sousTitre2, contenuSousTitre2,
-                sousTitre3, contenuSousTitre3,
-                auteur, categorie, datePublication, tags
-            } = req.body;
-
-            // Traitement des tags
-            let processedTags;
-            if (Array.isArray(tags)) {
-                processedTags = tags;
-            } else if (typeof tags === 'string') {
-                processedTags = tags.split(',').map(tag => tag.trim());
-            } else {
-                processedTags = [];
-            }
-
-            // Préparation des données de mise à jour
+            // Mise à jour des champs
             const updateData = {
-                titres: {
-                    grandTitre,
-                    contenuGrandTitre,
-                    sousTitres: [
-                        { sousTitre: sousTitre1, contenuSousTitre: contenuSousTitre1 },
-                        { sousTitre: sousTitre2, contenuSousTitre: contenuSousTitre2 },
-                        { sousTitre: sousTitre3, contenuSousTitre: contenuSousTitre3 }
-                    ],
-                },
-                auteur,
-                categorie,
-                tags: processedTags,
-                datePublication: datePublication || new Date()
+                "titres.grandTitre": req.body.grandTitre,
+                "titres.contenuGrandTitre": req.body.contenuGrandTitre,
+                "titres.sousTitres": [
+                    { sousTitre: req.body.sousTitre1, contenuSousTitre: req.body.contenuSousTitre1 },
+                    { sousTitre: req.body.sousTitre2, contenuSousTitre: req.body.contenuSousTitre2 },
+                    { sousTitre: req.body.sousTitre3, contenuSousTitre: req.body.contenuSousTitre3 }
+                ],
+                auteur: req.body.auteur,
+                categorie: req.body.categorie,
+                tags: req.body.tags,
+                datePublication: req.body.datePublication
             };
 
-            if (req.files['imageGrandTitre']) {
-                updateData["titres.imageGrandTitre"] = req.files['imageGrandTitre'][0].path;
+            // Si une nouvelle image est uploadée
+            if (req.files?.imageGrandTitre?.[0]) {
+                updateData["titres.imageGrandTitre"] = req.files.imageGrandTitre[0].path;
             }
-            if (req.files['imageSecondaire1']) {
-                updateData["titres.imageSecondaire1"] = req.files['imageSecondaire1'][0].path;
+            if (req.files?.imageSecondaire1?.[0]) {
+                updateData["titres.imageSecondaire1"] = req.files.imageSecondaire1[0].path;
             }
-            if (req.files['imageSecondaire2']) {
-                updateData["titres.imageSecondaire2"] = req.files['imageSecondaire2'][0].path;
+            if (req.files?.imageSecondaire2?.[0]) {
+                updateData["titres.imageSecondaire2"] = req.files.imageSecondaire2[0].path;
             }
-            if (req.files['imageSecondaire3']) {
-                updateData["titres.imageSecondaire3"] = req.files['imageSecondaire3'][0].path;
+            if (req.files?.imageSecondaire3?.[0]) {
+                updateData["titres.imageSecondaire3"] = req.files.imageSecondaire3[0].path;
             }
 
-            const updatedArchitecture = await Architecture.findByIdAndUpdate(
-                articleId,
-                updateData,
-                { new: true, runValidators: true }
-            );
+            const updateArchitecture = await Architecture.findByIdAndUpdate(articleId, updateData, { new: true });
 
-            if (!updatedArchitecture) {
+            if (!updateArchitecture) {
                 return res.status(404).json({ error: "Article non trouvé" });
             }
 
-            res.status(200).json({ message: 'Article mis à jour avec succès', architecture: updatedArchitecture });
+            res.status(200).json({ message: 'Article mis à jour avec succès', architecture: updateArchitecture });
         } catch (error) {
-            console.error("Erreur lors de la mise à jour de l'article:", error);
             res.status(400).json({ error: error.message });
         }
     }
