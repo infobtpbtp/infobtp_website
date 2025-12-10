@@ -16,9 +16,10 @@ const upload = multer({ storage: storage });
 const uploadArchitecture = (req, res, next) => {
   const uploadFields = upload.fields([
     { name: 'imageGrandTitre', maxCount: 1 },
-    { name: 'imageSecondaire1', maxCount: 1 }, // Nouvelle image secondaire 1
-    { name: 'imageSecondaire2', maxCount: 1 },  // Nouvelle image secondaire 2
-    // { name: 'imageSecondaire3', maxCount: 1 }  // Nouvelle image secondaire 3
+    { name: 'imageSousTitre1', maxCount: 1 },
+    { name: 'imageSousTitre2', maxCount: 1 },
+    { name: 'imageSecondaire1', maxCount: 1 },
+    { name: 'imageSecondaire2', maxCount: 1 }
   ]);
 
   uploadFields(req, res, (err) => {
