@@ -17,8 +17,6 @@ export default class ArchitectureControler {
 
             // Extraction des URLs des images
             const imageGrandTitreUrl = req.files['imageGrandTitre'] ? req.files['imageGrandTitre'][0].path : null;
-            const imageSousTitre1Url = req.files['imageSousTitre1'] ? req.files['imageSousTitre1'][0].path : null;
-            const imageSousTitre2Url = req.files['imageSousTitre2'] ? req.files['imageSousTitre2'][0].path : null;
             const imageSecondaire1Url = req.files['imageSecondaire1'] ? req.files['imageSecondaire1'][0].path : null;
             const imageSecondaire2Url = req.files['imageSecondaire2'] ? req.files['imageSecondaire2'][0].path : null;
             const imageSecondaire3Url = req.files['imageSecondaire3'] ? req.files['imageSecondaire3'][0].path : null;
